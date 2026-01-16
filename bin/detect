@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# bin/detect
+
+echo "Aria2c v1.37.0 (Custom Local Build)"
+exit 0

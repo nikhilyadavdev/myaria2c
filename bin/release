@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# bin/release
+
+cat <<EOF
+---
+config_vars:
+  PATH: /app/bin:\$PATH
+EOF

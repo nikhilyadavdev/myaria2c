@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+# Buildpack ka khud ka folder (jahan aria2c rakha hai)
+BP_DIR=$(cd $(dirname $0)/..; pwd)
+
+# Heroku app ka bin folder (jahan tool install hoga)
+BIN_DIR="$BUILD_DIR/bin"
+
+echo "-----> Installing Custom Aria2c (Local File)..."
+
+# 1. Bin folder create karo
+mkdir -p "$BIN_DIR"
+
+# 2. Local 'aria2c' file ko copy karo
+if [ -f "$BP_DIR/aria2c" ]; then
+    echo "       Found 'aria2c' in buildpack, copying to system..."
+    cp "$BP_DIR/aria2c" "$BIN_DIR/"
+    chmod +x "$BIN_DIR/aria2c"
+    echo "       ✅ Aria2c installed successfully!"
+else
+    echo "       ❌ Error: 'aria2c' file nahi mili! Please check repo."
+    exit 1
+fi
+
+# 3. Agar ffmpeg bhi yahi rakha hai to usko bhi copy karo (Optional)
+if [ -f "$BP_DIR/ffmpeg" ]; then
+    echo "       Found 'ffmpeg' in buildpack, copying..."
+    cp "$BP_DIR/ffmpeg" "$BIN_DIR/"
+    chmod +x "$BIN_DIR/ffmpeg"
+    echo "       ✅ FFmpeg installed successfully!"
+fi
